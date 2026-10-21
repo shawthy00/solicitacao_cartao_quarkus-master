@@ -1,0 +1,47 @@
+@baseUrl = http://localhost:8082
+@token = COLE_O_ACCESS_TOKEN_APOS_IMPLEMENTAR_LOGIN
+@tipoId = 1
+@solicitacaoId = 1
+
+### 1 Público JPA — usar um e-mail que não está na carga
+POST {{baseUrl}}/api/usuarios
+Content-Type: application/json
+
+{"nome":"Aluno Cartoes","email":"aluno@example.com","senha":"Senha@123"}
+
+### 2 Público JPA — implementar antes de chamar as rotas protegidas
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{"email":"aluno@example.com","senha":"Senha@123"}
+
+### 3 Protegido — única consulta JDBC
+GET {{baseUrl}}/api/tipos-cartao
+Authorization: Bearer {{token}}
+
+### 4 Protegido — titular vem do token, não do corpo
+POST {{baseUrl}}/api/solicitacoes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"tipoCartaoId":{{tipoId}}}
+
+### 5 Protegido JPA com JPQL personalizada
+GET {{baseUrl}}/api/solicitacoes?status=PENDENTE
+Authorization: Bearer {{token}}
+
+### 6 Protegido JPA — apenas pedido próprio
+GET {{baseUrl}}/api/solicitacoes/{{solicitacaoId}}
+Authorization: Bearer {{token}}
+
+### 7 Protegido JPA — para testar cancelar, não emitir este mesmo pedido
+PATCH {{baseUrl}}/api/solicitacoes/{{solicitacaoId}}/cancelar
+Authorization: Bearer {{token}}
+
+### 8 Protegido JPA — criar outro pedido PENDENTE e ajustar solicitacaoId antes
+POST {{baseUrl}}/api/solicitacoes/{{solicitacaoId}}/emitir
+Authorization: Bearer {{token}}
+
+### 9 Protegido JPA com JOIN entre cartão, solicitação e tipo
+GET {{baseUrl}}/api/cartoes
+Authorization: Bearer {{token}}
