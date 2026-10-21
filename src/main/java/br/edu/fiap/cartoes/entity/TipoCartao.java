@@ -1,5 +1,6 @@
 package br.edu.fiap.cartoes.entity;
 
+import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import jakarta.persistence.*;
 import java.time.Instant;
 import br.edu.fiap.cartoes.exception.EtapaNaoImplementadaException;
@@ -16,6 +17,7 @@ public class TipoCartao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, unique = true, length = 60)
     private String nome;
 
@@ -37,8 +39,15 @@ public class TipoCartao {
 
     /** Alterar a oferta do tipo sem apagar pedidos anteriores. */
     public void alterarDisponibilidade(boolean disponivel) {
-        // TODO: implementar o comportamento descrito no desafio.
-        throw new EtapaNaoImplementadaException("TipoCartao.alterarDisponibilidade");
+        /*
+        caso queira persistir a alteração, a fim de não apagar pedidos anteriores
+        deverá criar um campo private Instant alteradoEm;
+        if(this.disponivel == disponivel) throw RegraNegocioException.disponibilidadeNaoAlterada();
+
+        this.alteradoEm = Instant.now();
+        */
+
+        this.disponivel = disponivel;
     }
 
     // Getters e setters prontos; não usar setters de status para contornar as regras.
@@ -49,5 +58,5 @@ public class TipoCartao {
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
     public boolean isDisponivel() { return disponivel; }
-    public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
+//    public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
 }

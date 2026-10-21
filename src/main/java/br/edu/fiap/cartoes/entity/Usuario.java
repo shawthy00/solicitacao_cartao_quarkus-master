@@ -1,8 +1,8 @@
 package br.edu.fiap.cartoes.entity;
 
+import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import jakarta.persistence.*;
 import java.time.Instant;
-import br.edu.fiap.cartoes.exception.EtapaNaoImplementadaException;
 
 /**
  * Camada entity: representa o estado persistido de Usuario e seus comportamentos simples.
@@ -16,6 +16,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, length = 100)
     private String nome;
 
@@ -42,25 +43,27 @@ public class Usuario {
 
     /** Validar o nome antes de alterá-lo. */
     public void alterarNome(String nome) {
-        // TODO: implementar o comportamento descrito no desafio.
-        throw new EtapaNaoImplementadaException("Usuario.alterarNome");
+        if(nome == null || nome.isBlank() || nome.length() > 100) throw RegraNegocioException.validaNomeUsuario();
+
+        this.nome = nome;
     }
 
     /** Aceitar somente hash produzido pelo componente BCrypt, nunca senha em texto. */
     public void atualizarSenhaHash(String senhaHash) {
-        // TODO: implementar o comportamento descrito no desafio.
-        throw new EtapaNaoImplementadaException("Usuario.atualizarSenhaHash");
+        if(senhaHash == null || senhaHash.isBlank()) throw RegraNegocioException.validaSenhaHash();
+
+        this.senhaHash = senhaHash;
     }
 
     // Getters e setters prontos; não usar setters de status para contornar as regras.
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+//    public void setNome(String nome) { this.nome = nome; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getSenhaHash() { return senhaHash; }
-    public void setSenhaHash(String senhaHash) { this.senhaHash = senhaHash; }
+//    public void setSenhaHash(String senhaHash) { this.senhaHash = senhaHash; }
     public Instant getCriadoEm() { return criadoEm; }
     public void setCriadoEm(Instant criadoEm) { this.criadoEm = criadoEm; }
 }

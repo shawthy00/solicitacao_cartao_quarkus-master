@@ -1,8 +1,8 @@
 package br.edu.fiap.cartoes.entity;
 
+import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import jakarta.persistence.*;
 import java.time.Instant;
-import br.edu.fiap.cartoes.exception.EtapaNaoImplementadaException;
 
 /**
  * Camada entity: representa o estado persistido de SolicitacaoCartao e seus comportamentos simples.
@@ -13,9 +13,11 @@ import br.edu.fiap.cartoes.exception.EtapaNaoImplementadaException;
 @Entity
 @Table(name = "solicitacoes_cartao")
 public class SolicitacaoCartao {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
@@ -44,14 +46,16 @@ public class SolicitacaoCartao {
 
     /** Permitir somente PENDENTE para CANCELADA; outros estados geram conflito. */
     public void cancelar() {
-        // TODO: implementar o comportamento descrito no desafio.
-        throw new EtapaNaoImplementadaException("SolicitacaoCartao.cancelar");
+        if(status != StatusSolicitacao.PENDENTE) throw RegraNegocioException.cancelaApenasPendente();
+
+        this.status = StatusSolicitacao.CANCELADA;
     }
 
     /** Permitir somente PENDENTE para EMITIDA; executar na mesma transação da criação do cartão. */
     public void marcarEmitida() {
-        // TODO: implementar o comportamento descrito no desafio.
-        throw new EtapaNaoImplementadaException("SolicitacaoCartao.marcarEmitida");
+        if(status != StatusSolicitacao.PENDENTE) throw RegraNegocioException.emiteApenasPendente();
+
+        this.status = StatusSolicitacao.EMITIDA;
     }
 
     // Getters e setters prontos; não usar setters de status para contornar as regras.
@@ -64,5 +68,6 @@ public class SolicitacaoCartao {
     public Instant getSolicitadaEm() { return solicitadaEm; }
     public void setSolicitadaEm(Instant solicitadaEm) { this.solicitadaEm = solicitadaEm; }
     public StatusSolicitacao getStatus() { return status; }
-    public void setStatus(StatusSolicitacao status) { this.status = status; }
+
+//    public void setStatus(StatusSolicitacao status) { this.status = status; }
 }

@@ -2,8 +2,6 @@ package br.edu.fiap.cartoes.entity;
 
 import jakarta.persistence.*;
 import java.time.Instant;
-import br.edu.fiap.cartoes.exception.EtapaNaoImplementadaException;
-
 /**
  * Camada entity: representa o estado persistido de Cartao e seus comportamentos simples.
  * As anotações JPA já estão prontas. Na migração para Clean, discutam se o modelo
@@ -16,6 +14,7 @@ public class Cartao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "solicitacao_id", nullable = false, unique = true)
     private SolicitacaoCartao solicitacao;
@@ -39,8 +38,7 @@ public class Cartao {
 
     /** Informar se o cartão está ATIVO. Não criar outra rota obrigatória. */
     public boolean estaAtivo() {
-        // TODO: implementar o comportamento descrito no desafio.
-        throw new EtapaNaoImplementadaException("Cartao.estaAtivo");
+        return this.status == StatusCartao.ATIVO;
     }
 
     // Getters e setters prontos; não usar setters de status para contornar as regras.
