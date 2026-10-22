@@ -1,4 +1,5 @@
 package br.edu.fiap.cartoes.usecase;
+import br.edu.fiap.cartoes.exception.CredenciaisInvalidasException;
 import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import br.edu.fiap.cartoes.repository.UsuarioRepository;
 import br.edu.fiap.cartoes.security.JwtService;
@@ -35,10 +36,10 @@ public class AutenticacaoUseCase {
 
         Usuario usuario = usuarioRepository
                 .buscarPorEmail(emailNormalizado)
-                .orElseThrow(() -> RegraNegocioException.credenciaisInvalidas());
+                .orElseThrow(() -> CredenciaisInvalidasException.credenciaisInvalidas());
 
         if(!senhaBCrypt.confere(request.senha(), usuario.getSenhaHash())) {
-            throw RegraNegocioException.credenciaisInvalidas();
+            throw CredenciaisInvalidasException.credenciaisInvalidas();
         }
 
         return jwtService.emitir(usuario);

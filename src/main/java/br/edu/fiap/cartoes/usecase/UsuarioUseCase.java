@@ -1,4 +1,5 @@
 package br.edu.fiap.cartoes.usecase;
+import br.edu.fiap.cartoes.exception.EntradaInvalidaException;
 import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import br.edu.fiap.cartoes.repository.UsuarioRepository;
 import br.edu.fiap.cartoes.security.SenhaBCrypt;
@@ -38,7 +39,7 @@ public class UsuarioUseCase {
         }
 
         if (request.senha().getBytes(StandardCharsets.UTF_8).length > 72) {
-            throw RegraNegocioException.senhaExcedeLimiteBCrypt();
+            throw EntradaInvalidaException.senhaExcedeLimiteBCrypt();
         }
 
         String senhaHash = senhaBCrypt.criarHash(request.senha());

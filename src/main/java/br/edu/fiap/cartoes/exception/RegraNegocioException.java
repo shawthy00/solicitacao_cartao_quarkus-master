@@ -11,36 +11,8 @@ public class RegraNegocioException extends RuntimeException {
         return new RegraNegocioException("Somente solicitação pendente migra para emitida.");
     }
 
-    public static RegraNegocioException validaNomeUsuario() {
-        return new RegraNegocioException("Nome não deve ser vazio e deve ter menos que 100 caracteres.");
-    }
-
-    public static RegraNegocioException validaSenhaHash() {
-        return new RegraNegocioException("O hash da senha deve ser informado.");
-    }
-
-    public static RegraNegocioException disponibilidadeNaoAlterada() {
-        return new RegraNegocioException("A disponibilidade do cartão não foi alterada.");
-    }
-
     public static RegraNegocioException emailJaCadastrado() {
         return new RegraNegocioException("E-mail já cadastrado.");
-    }
-
-    public static RegraNegocioException senhaExcedeLimiteBCrypt() {
-        return new RegraNegocioException("A senha não pode ultrapassar 72 bytes em UTF-8.");
-    }
-
-    public static RegraNegocioException credenciaisInvalidas() {
-        return new RegraNegocioException("E-mail ou senha inválidos.");
-    }
-
-    public static RegraNegocioException usuarioNaoEncontrado() {
-        return new RegraNegocioException("Usuário não encontrado.");
-    }
-
-    public static RegraNegocioException tipoCartaoNaoEncontrado() {
-        return new RegraNegocioException("Tipo de cartão não encontrado.");
     }
 
     public static RegraNegocioException tipoCartaoIndisponivel() {
@@ -51,16 +23,8 @@ public class RegraNegocioException extends RuntimeException {
         return new RegraNegocioException("Já existe uma solicitação pendente para este tipo de cartão.");
     }
 
-
-
-
-
-    public static RegraNegocioException solicitacaoNaoEncontrada() {
-        return new RegraNegocioException("Tipo de cartão indisponível para solicitação.");
-    }
-
     public static RegraNegocioException cartaoJaEmitido() {
-        return new RegraNegocioException("Já existe uma solicitação pendente para este tipo de cartão.");
+        return new RegraNegocioException("Já existe um cartão emitido para esta solicitação.");
     }
 }
 

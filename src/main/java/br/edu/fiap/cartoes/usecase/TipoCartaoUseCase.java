@@ -2,8 +2,6 @@ package br.edu.fiap.cartoes.usecase;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 import br.edu.fiap.cartoes.dto.*;
-import br.edu.fiap.cartoes.entity.StatusSolicitacao;
-import br.edu.fiap.cartoes.exception.EtapaNaoImplementadaException;
 import br.edu.fiap.cartoes.repository.ConsultaTiposDisponiveis;
 import jakarta.inject.Inject;
 /**
@@ -30,8 +28,6 @@ public class TipoCartaoUseCase {
                                                 tipo.isDisponivel()
                                             ))
                                             .toList();
-
-        }
 
     }
 }

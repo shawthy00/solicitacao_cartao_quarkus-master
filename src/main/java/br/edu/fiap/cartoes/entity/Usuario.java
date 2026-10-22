@@ -1,5 +1,6 @@
 package br.edu.fiap.cartoes.entity;
 
+import br.edu.fiap.cartoes.exception.EntradaInvalidaException;
 import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import jakarta.persistence.*;
 import java.time.Instant;
@@ -43,14 +44,14 @@ public class Usuario {
 
     /** Validar o nome antes de alterá-lo. */
     public void alterarNome(String nome) {
-        if(nome == null || nome.isBlank() || nome.length() > 100) throw RegraNegocioException.validaNomeUsuario();
+        if(nome == null || nome.isBlank() || nome.length() > 100) throw EntradaInvalidaException.nomeUsuarioInvalido();
 
         this.nome = nome;
     }
 
     /** Aceitar somente hash produzido pelo componente BCrypt, nunca senha em texto. */
     public void atualizarSenhaHash(String senhaHash) {
-        if(senhaHash == null || senhaHash.isBlank()) throw RegraNegocioException.validaSenhaHash();
+        if(senhaHash == null || senhaHash.isBlank()) throw EntradaInvalidaException.senhaHashInvalida();
 
         this.senhaHash = senhaHash;
     }

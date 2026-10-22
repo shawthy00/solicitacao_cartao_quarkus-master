@@ -8,6 +8,7 @@ import br.edu.fiap.cartoes.entity.SolicitacaoCartao;
 import br.edu.fiap.cartoes.entity.StatusSolicitacao;
 import br.edu.fiap.cartoes.entity.TipoCartao;
 import br.edu.fiap.cartoes.entity.Usuario;
+import br.edu.fiap.cartoes.exception.RecursoNaoEncontradoException;
 import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import br.edu.fiap.cartoes.repository.CartaoRepository;
 import br.edu.fiap.cartoes.repository.SolicitacaoCartaoRepository;
@@ -46,11 +47,11 @@ public class SolicitacaoUseCase {
 
         Usuario usuario = usuarioRepository
                 .buscarPorId(usuarioId)
-                .orElseThrow(RegraNegocioException::usuarioNaoEncontrado);
+                .orElseThrow(RecursoNaoEncontradoException::usuarioNaoEncontrado);
 
         TipoCartao tipoCartao = tipoCartaoRepository
                 .buscarPorId(request.tipoCartaoId())
-                .orElseThrow(RegraNegocioException::tipoCartaoNaoEncontrado);
+                .orElseThrow(RecursoNaoEncontradoException::tipoCartaoNaoEncontrado);
 
         if (!tipoCartao.isDisponivel()) {
             throw RegraNegocioException.tipoCartaoIndisponivel();
@@ -99,7 +100,7 @@ public class SolicitacaoUseCase {
 
         SolicitacaoCartao solicitacao = solicitacaoRepository
                 .buscarPorIdETitular(id, usuarioId)
-                .orElseThrow(RegraNegocioException::solicitacaoNaoEncontrada);
+                .orElseThrow(RecursoNaoEncontradoException::solicitacaoNaoEncontrada);
 
         return paraResponse(solicitacao);
     }
@@ -116,7 +117,7 @@ public class SolicitacaoUseCase {
 
         SolicitacaoCartao solicitacao = solicitacaoRepository
                 .buscarPorIdETitularComBloqueio(id, usuarioId)
-                .orElseThrow(RegraNegocioException::solicitacaoNaoEncontrada);
+                .orElseThrow(RecursoNaoEncontradoException::solicitacaoNaoEncontrada);
 
         solicitacao.cancelar();
 
@@ -135,7 +136,7 @@ public class SolicitacaoUseCase {
 
         SolicitacaoCartao solicitacao = solicitacaoRepository
                 .buscarPorIdETitularComBloqueio(id, usuarioId)
-                .orElseThrow(RegraNegocioException::solicitacaoNaoEncontrada);
+                .orElseThrow(RecursoNaoEncontradoException::solicitacaoNaoEncontrada);
 
         if (cartaoRepository.existePorSolicitacao(solicitacao.getId())) {
             throw RegraNegocioException.cartaoJaEmitido();
