@@ -3,10 +3,7 @@ import br.edu.fiap.cartoes.exception.RegraNegocioException;
 import br.edu.fiap.cartoes.repository.UsuarioRepository;
 import br.edu.fiap.cartoes.security.SenhaBCrypt;
 import jakarta.enterprise.context.ApplicationScoped;
-import java.util.List;
 import br.edu.fiap.cartoes.dto.*;
-import br.edu.fiap.cartoes.entity.StatusSolicitacao;
-import br.edu.fiap.cartoes.exception.EtapaNaoImplementadaException;
 import jakarta.inject.Inject;
 import java.util.Locale;
 import java.nio.charset.StandardCharsets;
@@ -54,7 +51,11 @@ public class UsuarioUseCase {
 
         Usuario usuarioSalvo = usuarioRepository.salvar(usuario);
 
-        // falta montar o UsuarioResponse
-        throw new EtapaNaoImplementadaException("UsuarioUseCase.cadastrar");
+        return new UsuarioResponse(
+                usuarioSalvo.getId(),
+                usuarioSalvo.getNome(),
+                usuarioSalvo.getEmail(),
+                usuarioSalvo.getCriadoEm()
+        );
     }
 }

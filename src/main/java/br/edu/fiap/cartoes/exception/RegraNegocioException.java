@@ -31,6 +31,9 @@ public class RegraNegocioException extends RuntimeException {
         return new RegraNegocioException("A senha não pode ultrapassar 72 bytes em UTF-8.");
     }
 
+    public static RegraNegocioException credenciaisInvalidas() {
+        return new RegraNegocioException("E-mail ou senha inválidos.");
+    }
 
 }
 
