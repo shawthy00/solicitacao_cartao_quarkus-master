@@ -1,10 +1,32 @@
 package br.edu.fiap.cartoes.repository;
-/**
- * Interface de persistência a completar pelo grupo. Não há Spring Data: declarar o
- * nome de um método não cria sua implementação. Escrevam os contratos usados pelos
- * use cases e implementem a classe concreta. Ao migrar, movam o contrato para uma
- * porta da aplicação, sem tipos de EntityManager, ResultSet ou DTO HTTP.
- */
+
+import br.edu.fiap.cartoes.entity.SolicitacaoCartao;
+import br.edu.fiap.cartoes.entity.StatusSolicitacao;
+
+import java.util.List;
+import java.util.Optional;
+
 public interface SolicitacaoCartaoRepository {
-    // TODO: definir assinaturas de consulta e gravação indicadas no README.
+
+    SolicitacaoCartao salvar(SolicitacaoCartao solicitacao);
+
+    Optional<SolicitacaoCartao> buscarPorIdETitular(
+            Long solicitacaoId,
+            Long usuarioId
+    );
+
+    Optional<SolicitacaoCartao> buscarPorIdETitularComBloqueio(
+            Long solicitacaoId,
+            Long usuarioId
+    );
+
+    List<SolicitacaoCartao> listarPorTitular(
+            Long usuarioId,
+            StatusSolicitacao status
+    );
+
+    boolean existePendente(
+            Long usuarioId,
+            Long tipoCartaoId
+    );
 }

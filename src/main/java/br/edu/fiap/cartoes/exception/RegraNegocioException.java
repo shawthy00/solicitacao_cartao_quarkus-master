@@ -35,5 +35,32 @@ public class RegraNegocioException extends RuntimeException {
         return new RegraNegocioException("E-mail ou senha inválidos.");
     }
 
+    public static RegraNegocioException usuarioNaoEncontrado() {
+        return new RegraNegocioException("Usuário não encontrado.");
+    }
+
+    public static RegraNegocioException tipoCartaoNaoEncontrado() {
+        return new RegraNegocioException("Tipo de cartão não encontrado.");
+    }
+
+    public static RegraNegocioException tipoCartaoIndisponivel() {
+        return new RegraNegocioException("Tipo de cartão indisponível para solicitação.");
+    }
+
+    public static RegraNegocioException solicitacaoPendenteDuplicada() {
+        return new RegraNegocioException("Já existe uma solicitação pendente para este tipo de cartão.");
+    }
+
+
+
+
+
+    public static RegraNegocioException solicitacaoNaoEncontrada() {
+        return new RegraNegocioException("Tipo de cartão indisponível para solicitação.");
+    }
+
+    public static RegraNegocioException cartaoJaEmitido() {
+        return new RegraNegocioException("Já existe uma solicitação pendente para este tipo de cartão.");
+    }
 }
 
