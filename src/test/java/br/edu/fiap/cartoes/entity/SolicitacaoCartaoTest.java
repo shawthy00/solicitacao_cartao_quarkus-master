@@ -74,6 +74,8 @@ class SolicitacaoCartaoTest {
 
         SolicitacaoCartao solicitacao = criarSolicitacao();
 
+        solicitacao.cancelar();
+
         RegraNegocioException exception = assertThrows(
                 RegraNegocioException.class,
                 solicitacao::cancelar
