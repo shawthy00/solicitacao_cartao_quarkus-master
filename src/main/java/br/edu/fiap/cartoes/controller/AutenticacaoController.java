@@ -30,7 +30,8 @@ import br.edu.fiap.cartoes.config.UsuarioAtual;
 @Tag(name="Login")
 @PermitAll
 public class AutenticacaoController {
-    @Inject AutenticacaoUseCase autenticacao;
+    @Inject
+    AutenticacaoUseCase autenticacao;
 
     /** Pública. Buscar usuário por JPA, conferir BCrypt e emitir HS256 com usuarioId e expiração de 900 segundos. Senha ou e-mail incorretos geram o mesmo 401. */
     @POST

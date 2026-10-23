@@ -31,8 +31,11 @@ import br.edu.fiap.cartoes.config.UsuarioAtual;
 @Authenticated
 @SecurityRequirement(name="bearerAuth")
 public class CartaoController {
-    @Inject CartaoUseCase cartoes;
-    @Inject UsuarioAtual usuarioAtual;
+    @Inject
+    CartaoUseCase cartoes;
+
+    @Inject
+    UsuarioAtual usuarioAtual;
 
     /** Protegida. JPQL personalizada ligando cartão, solicitação, usuário e tipo. Filtrar pelo titular do JWT e retornar dados pelo DTO, sem senha ou entidades aninhadas. */
     @GET

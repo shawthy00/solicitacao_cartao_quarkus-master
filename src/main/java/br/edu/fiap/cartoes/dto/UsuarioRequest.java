@@ -9,12 +9,14 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public record UsuarioRequest(
     @NotBlank
     @Size(max = 100)
-    @Schema(description = "Nome completo", example = "Ana Lima")
+    @Schema(description = "Nome completo",
+            example = "Ana Lima")
     String nome,
 
     @NotBlank
     @Email @Size(max = 160)
-    @Schema(description = "E-mail único, normalizado em minúsculas", example = "ana@example.com")
+    @Schema(description = "E-mail único, normalizado em minúsculas",
+            example = "ana@example.com")
     String email,
 
     @NotBlank
